@@ -1,21 +1,18 @@
-def fibonacci(n):
+n = 11
+
+def fibonacci_recursivo(n):
     if n <= 0:
-        return "Por favor, ingresa un número mayor que 0."
+        return []
     elif n == 1:
         return [0]
     elif n == 2:
         return [0, 1]
     
-    # Inicializar la serie con los dos primeros números
-    serie = [0, 1]
-    
-    # Generar los siguientes números de la serie
-    for i in range(2, n):
-        siguiente = serie[-1] + serie[-2]  # Suma de los dos últimos números
-        serie.append(siguiente)
+    serie = fibonacci_recursivo(n - 1)
+
+    siguiente = serie[-1] + serie[-2]
+    serie.append(siguiente)
     
     return serie
 
-# Ejemplo de uso
-n = 10  # Cambia este valor para generar más o menos números
-print(f"Los primeros {n} números de la serie Fibonacci son: {fibonacci(n)}")
+print(f"Los primeros {n} números de la serie Fibonacci son: {fibonacci_recursivo(n)}")
