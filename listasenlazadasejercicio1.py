@@ -1,6 +1,3 @@
-# Sistema simple para control de animales en un zoológico
-# Utilizando listas enlazadas
-
 class Animal:
     def __init__(self, nombre, edad, tipo):
         """Constructor de la clase Animal"""
