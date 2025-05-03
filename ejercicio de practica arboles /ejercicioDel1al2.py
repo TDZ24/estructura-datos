@@ -1,22 +1,22 @@
 class NodoArbol:
-    def __init__(self, valor):
-        self.valor = valor
-        self.izquierda = None
-        self.derecha = None
+    def __init__(self, valor: int):
+        self.valor: int = valor
+        self.izquierda: 'NodoArbol' = None
+        self.derecha: 'NodoArbol' = None
 
 class ArbolBinario:
     def __init__(self):
-        self.raiz = None
+        self.raiz: 'NodoArbol' = None
 
-    def insertar(self, valor):
-        """Inserta un nuevo valor en el árbol"""
+    def insertar(self, valor: int) -> None:
+        """Inserta un nuevo valor en el árbol manteniendo la propiedad de árbol binario"""
         if self.raiz is None:
             self.raiz = NodoArbol(valor)
         else:
             self._insertar_recursivo(self.raiz, valor)
 
-    def _insertar_recursivo(self, nodo_actual, valor):
-        """Método auxiliar para insertar recursivamente"""
+    def _insertar_recursivo(self, nodo_actual: 'NodoArbol', valor: int) -> None:
+        """Método auxiliar recursivo para insertar un nuevo nodo"""
         if valor < nodo_actual.valor:
             if nodo_actual.izquierda is None:
                 nodo_actual.izquierda = NodoArbol(valor)
@@ -28,20 +28,20 @@ class ArbolBinario:
             else:
                 self._insertar_recursivo(nodo_actual.derecha, valor)
     
-    def preorden(self, nodo):
-        """Recorrido Pre-Orden: Raíz, Izquierda, Derecha"""
+    def preorden(self, nodo: 'NodoArbol') -> None:
+        """Recorre el árbol en orden: raíz, izquierda, derecha"""
         if nodo is not None:
             print(nodo.valor)
             self.preorden(nodo.izquierda)
             self.preorden(nodo.derecha)
 
-    def por_niveles(self):
-        """Recorrido por niveles (BFS)"""
+    def por_niveles(self) -> None:
+        """Recorre el árbol nivel por nivel (BFS)"""
         if self.raiz is None:
             print("El árbol está vacío")
             return
         
-        cola = [self.raiz]
+        cola = [self.raiz]  # type: list[NodoArbol]
 
         while cola:
             nodo_actual = cola.pop(0)
@@ -52,8 +52,8 @@ class ArbolBinario:
             if nodo_actual.derecha:
                 cola.append(nodo_actual.derecha)
 
-    def buscar(self, nodo, busqueda):
-        """Busca un valor en el árbol"""
+    def buscar(self, nodo: 'NodoArbol', busqueda: int) -> tuple[str, bool]:
+        """Busca un valor en el árbol y retorna un mensaje y un booleano"""
         if nodo is None:
             return "El valor no existe", False
         if nodo.valor == busqueda:
@@ -65,23 +65,24 @@ class ArbolBinario:
 
 
 # Ejemplo de uso
-arbol = ArbolBinario()
-numeros = [20, 10, 30, 5, 15, 25, 35]
+if __name__ == "__main__":
+    arbol = ArbolBinario()
+    valores = [20, 10, 30, 5, 15, 25, 35]
+    
+    for num in valores:
+        arbol.insertar(num)
 
-for num in numeros:
-    arbol.insertar(num)
+    print("Recorrido Pre-Orden:")
+    arbol.preorden(arbol.raiz)
 
-print("Recorrido Pre-Orden:")
-arbol.preorden(arbol.raiz)
+    print("\nRecorrido por Niveles:")
+    arbol.por_niveles()
 
-print("\nRecorrido por Niveles:")
-arbol.por_niveles()
+    print("\n")
 
-print("\n")
+    # Pruebas de búsqueda
+    resultado = arbol.buscar(arbol.raiz, 15)
+    print(resultado)  # ("El valor 15 existe", True)
 
-# Pruebas de búsqueda
-resultado = arbol.buscar(arbol.raiz, 15)
-print(resultado)  # ("El valor 15 existe", True)
-
-resultado = arbol.buscar(arbol.raiz, 99)
-print(resultado)  # ("El valor no existe", False)
+    resultado = arbol.buscar(arbol.raiz, 99)
+    print(resultado)  # ("El valor no existe", False)
